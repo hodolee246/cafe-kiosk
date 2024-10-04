@@ -6,7 +6,7 @@ spring:
     url:
     driver-class-name: org.h2.Driver
     username: sa
-    password:
+    password: 1234
 
   jpa:
     hibernate:
@@ -20,6 +20,25 @@ spring:
   h2:
     console:
       enabled: true
-
 ---
 spring:
+  profiles:
+    default: test
+
+  datasource:
+    url:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+sql:
+  init:
+    mode: never
