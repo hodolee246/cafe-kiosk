@@ -62,4 +62,46 @@ class ProductRepositoryTest {
                         Tuple.tuple("002", "아메리카노", ProductSellingStatus.HOLD));
     }
 
+    @DisplayName("원하는 상품번호로 상품 조회")
+    @Test
+    void findAllByProductNumberIn() {
+        //given
+        Product product1 = Product.builder()
+                .productNumber("001")
+                .productType(ProductType.HANDMADE)
+                .productSellingType(ProductSellingStatus.SELLING)
+                .name("아메리카노")
+                .price(4000)
+                .build();
+
+        Product product2 = Product.builder()
+                .productNumber("002")
+                .productType(ProductType.HANDMADE)
+                .productSellingType(ProductSellingStatus.HOLD)
+                .name("아아")
+                .price(4200)
+                .build();
+
+        Product product3 = Product.builder()
+                .productNumber("003")
+                .productType(ProductType.HANDMADE)
+                .productSellingType(ProductSellingStatus.STOP_SELLING)
+                .name("팥빙수")
+                .price(7000)
+                .build();
+        List<Product> productList = new ArrayList<>();
+        productList.add(product1);
+        productList.add(product2);
+        productList.add(product3);
+        productRepository.saveAll(productList);
+        //when
+        productRepository.findAllByProductNumberIn(List.of("001", "002"));
+        //then
+        Assertions.assertThat(productList).hasSameClassAs(2)
+                .extracting("productNumber", "name", "sellingType")
+                //순서 상관없이 체크
+                .containsExactlyInAnyOrder(Tuple.tuple("001", "아메리카노", ProductSellingStatus.SELLING),
+                        Tuple.tuple("002", "아메리카노", ProductSellingStatus.HOLD));
+    }
+
 }
