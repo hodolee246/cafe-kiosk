@@ -4,12 +4,11 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import sample.cafekiosk.spring.domain.orderproduct.OrderProduct;
 import sample.cafekiosk.spring.domain.product.BaseEntity;
 import sample.cafekiosk.spring.domain.product.Product;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
