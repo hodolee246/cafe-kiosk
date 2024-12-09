@@ -11,7 +11,6 @@ import sample.cafekiosk.spring.domain.product.ProductRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,7 +38,7 @@ public class OrderService {
 
         return productNumbers.stream()
                 .map(productMap::get)
-                .collect(Collectors.toList());
+                .toList();
     }
 
 }

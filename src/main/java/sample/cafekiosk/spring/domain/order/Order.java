@@ -37,7 +37,7 @@ public class Order extends BaseEntity {
         this.registerDateTime = registerDateTime;
         this.orderProductList = products.stream()
                 .map(product -> new OrderProduct(this, product))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private static int calculateTotalPrice(List<Product> products) {
