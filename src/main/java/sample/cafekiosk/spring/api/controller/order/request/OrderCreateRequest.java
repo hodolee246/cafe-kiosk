@@ -1,4 +1,4 @@
-package sample.cafekiosk.spring.api.request;
+package sample.cafekiosk.spring.api.controller.order.request;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +13,7 @@ public class OrderCreateRequest {
     private List<String> productNumbers;
 
     @Builder
-    public OrderCreateRequest(List<String> productNumbers) {
+    private OrderCreateRequest(List<String> productNumbers) {
         this.productNumbers = productNumbers;
     }
 

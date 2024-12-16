@@ -1,4 +1,4 @@
-package sample.cafekiosk.spring.api.service.order;
+package sample.cafekiosk.spring.api.service.order.response;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -12,27 +12,29 @@ import java.util.stream.Collectors;
 @Getter
 public class OrderResponse {
 
-    private Long orderId;
+    private Long id;
     private int totalPrice;
-    private LocalDateTime registerDateTime;
+    private LocalDateTime registeredDateTime;
     private List<ProductResponse> products;
 
     @Builder
-    public OrderResponse(Long orderId, int totalPrice, LocalDateTime registerDateTime, List<ProductResponse> products) {
-        this.orderId = orderId;
+    private OrderResponse(Long id, int totalPrice, LocalDateTime registeredDateTime, List<ProductResponse> products) {
+        this.id = id;
         this.totalPrice = totalPrice;
-        this.registerDateTime = registerDateTime;
+        this.registeredDateTime = registeredDateTime;
         this.products = products;
     }
 
     public static OrderResponse of(Order order) {
         return OrderResponse.builder()
-                .orderId(order.getOrderId())
+                .id(order.getId())
                 .totalPrice(order.getTotalPrice())
-                .registerDateTime(order.getRegisterDateTime())
-                .products(order.getOrderProductList().stream()
+                .registeredDateTime(order.getRegisteredDateTime())
+                .products(order.getOrderProducts().stream()
                         .map(orderProduct -> ProductResponse.of(orderProduct.getProduct()))
-                        .toList())
+                        .collect(Collectors.toList())
+                )
                 .build();
     }
+
 }

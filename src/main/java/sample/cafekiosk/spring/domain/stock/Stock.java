@@ -1,14 +1,15 @@
 package sample.cafekiosk.spring.domain.stock;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import sample.cafekiosk.spring.domain.product.BaseEntity;
+import sample.cafekiosk.spring.domain.BaseEntity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,7 +25,7 @@ public class Stock extends BaseEntity {
     private int quantity;
 
     @Builder
-    public Stock(Long id, String productNumber, int quantity) {
+    private Stock(String productNumber, int quantity) {
         this.productNumber = productNumber;
         this.quantity = quantity;
     }
@@ -35,4 +36,16 @@ public class Stock extends BaseEntity {
                 .quantity(quantity)
                 .build();
     }
+
+    public boolean isQuantityLessThan(int quantity) {
+        return this.quantity < quantity;
+    }
+
+    public void deductQuantity(int quantity) {
+        if (isQuantityLessThan(quantity)) {
+            throw new IllegalArgumentException("차감할 재고 수량이 없습니다.");
+        }
+        this.quantity -= quantity;
+    }
+
 }

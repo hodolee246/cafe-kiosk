@@ -1,7 +1,7 @@
 package sample.cafekiosk.unit;
 
 import lombok.Getter;
-import sample.cafekiosk.unit.bererage.Beverage;
+import sample.cafekiosk.unit.beverage.Beverage;
 import sample.cafekiosk.unit.order.Order;
 
 import java.time.LocalDateTime;
@@ -23,7 +23,7 @@ public class CafeKiosk {
 
     public void add(Beverage beverage, int count) {
         if (count <= 0) {
-            throw new IllegalArgumentException("drink must be over than 0");
+            throw new IllegalArgumentException("음료는 1잔 이상 주문하실 수 있습니다.");
         }
 
         for (int i = 0; i < count; i++) {
@@ -40,18 +40,16 @@ public class CafeKiosk {
     }
 
     public int calculateTotalPrice() {
-        int totalPrice = 0;
-        for (Beverage beverage : beverages) {
-            totalPrice += beverage.getPrice();
-        }
-        return totalPrice;
+        return beverages.stream()
+            .mapToInt(Beverage::getPrice)
+            .sum();
     }
 
     public Order createOrder() {
         LocalDateTime currentDateTime = LocalDateTime.now();
         LocalTime currentTime = currentDateTime.toLocalTime();
         if (currentTime.isBefore(SHOP_OPEN_TIME) || currentTime.isAfter(SHOP_CLOSE_TIME)) {
-            throw new IllegalArgumentException("not order time");
+            throw new IllegalArgumentException("주문 시간이 아닙니다. 관리자에게 문의하세요.");
         }
 
         return new Order(currentDateTime, beverages);
@@ -60,7 +58,7 @@ public class CafeKiosk {
     public Order createOrder(LocalDateTime currentDateTime) {
         LocalTime currentTime = currentDateTime.toLocalTime();
         if (currentTime.isBefore(SHOP_OPEN_TIME) || currentTime.isAfter(SHOP_CLOSE_TIME)) {
-            throw new IllegalArgumentException("not order time");
+            throw new IllegalArgumentException("주문 시간이 아닙니다. 관리자에게 문의하세요.");
         }
 
         return new Order(currentDateTime, beverages);
