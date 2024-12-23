@@ -40,11 +40,14 @@ public class OrderService {
     }
 
     private void deductStockQuantities(List<Product> products) {
+        // 재고 차감 체크가 필요한 상품들 filter
         List<String> stockProductNumbers = extractStockProductNumbers(products);
-
+        // 재고 엔티티 조회
         Map<String, Stock> stockMap = createStockMapBy(stockProductNumbers);
+        // 상품별 counting
         Map<String, Long> productCountingMap = createCountingMapBy(stockProductNumbers);
 
+        // 재고 차감 시도
         for (String stockProductNumber : new HashSet<>(stockProductNumbers)) {
             Stock stock = stockMap.get(stockProductNumber);
             int quantity = productCountingMap.get(stockProductNumber).intValue();
