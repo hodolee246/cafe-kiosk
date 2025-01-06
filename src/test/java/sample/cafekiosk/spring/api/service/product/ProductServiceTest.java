@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import sample.cafekiosk.spring.api.controller.product.request.ProductCreateRequest;
 import sample.cafekiosk.spring.api.service.product.response.ProductResponse;
 import sample.cafekiosk.spring.domain.product.Product;
 import sample.cafekiosk.spring.domain.product.ProductRepository;
 import sample.cafekiosk.spring.domain.product.ProductSellingStatus;
 import sample.cafekiosk.spring.domain.product.ProductType;
-import sample.cafekiosk.spring.domain.product.dto.request.ProductCreateRequest;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class ProductServiceTest {
                 .build();
 
         // when
-        ProductResponse product = productService.createProduct(request);
+        ProductResponse product = productService.createProduct(request.toServiceRequest());
 
         // then
         Assertions.assertThat(product)
@@ -78,7 +78,7 @@ public class ProductServiceTest {
                 .build();
 
         // when
-        ProductResponse product = productService.createProduct(request);
+        ProductResponse product = productService.createProduct(request.toServiceRequest());
 
         // then
         Assertions.assertThat(product)
